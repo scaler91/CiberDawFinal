@@ -1,0 +1,52 @@
+       controlCibercafe ccc;
+    String cabeceraInventario[] = {"ID", "Nombre", "Cantidad", "Precio"};
+    String[][] vaciaInventario = {};
+    DefaultTableModel tablaInventario;
+
+    /**
+     * Creates new form InventarioV
+     *
+     * @throws ventasbd.dao.exception.ErrorConexionBD
+     */
+
+    public InventarioV() throws ErrorConexionBD, ErrorConexionBD {
+        ccc = new controlCibercafe();
+        initComponents();
+
+        tablaInventario = new DefaultTableModel(vaciaInventario, cabeceraInventario);
+        jTable1.setModel(tablaInventario);
+    }
+
+
+
+
+
+
+
+
+
+ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        try {
+            // TODO add your handling code here:
+            tablaInventario = new DefaultTableModel(vaciaInventario, cabeceraInventario);
+            jTable1.setModel(tablaInventario);
+            
+            Inventario I = new Inventario();
+            ccc.verConsumible(I);
+
+            String[][] inventarioTabla = I.getStock();
+
+            int linea = 0;
+            while (linea < inventarioTabla.length) {
+                tablaInventario.addRow(vaciaInventario);
+                jTable1.setValueAt(inventarioTabla[linea][0], linea, 0);
+                jTable1.setValueAt(inventarioTabla[linea][1], linea, 1);
+                jTable1.setValueAt(inventarioTabla[linea][2], linea, 2);
+                jTable1.setValueAt(inventarioTabla[linea][3], linea, 3);
+                linea ++;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(InventarioV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
